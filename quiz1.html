@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Teste dein Wissen über Alkohol</title>
+    <title>Quiz – Multiple Choice</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         :root {
@@ -46,14 +46,23 @@
             font-size: 1.25em;
             margin-bottom: 20px;
         }
-        input[type="text"] {
-            width: 100%;
-            padding: 9px 12px;
-            border: 1px solid #bbb;
-            border-radius: 6px;
-            font-size: 1.05em;
+        .choices {
             margin-bottom: 18px;
-            box-sizing: border-box;
+        }
+        .choice-label {
+            display: block;
+            background: #f0f5fc;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font-size: 1.08em;
+            border: 2px solid transparent;
+            transition: border-color 0.15s;
+        }
+        input[type="radio"]:checked + .choice-label {
+            border-color: var(--primary);
+            background: #e6f0fc;
         }
         .btn {
             background: var(--primary);
@@ -104,54 +113,98 @@
         </div>
     </div>
     <script>
-        // Fragen und Antworten: Array von Objekten
+        // Fragen, Antwortmöglichkeiten und korrekte Antwort-Index
         const questions = [
-            {question: "Was ist das Organ das von Alkohol am meisten belastet wird?", answer: "Leber"},
-            {question: "Was ist 5 + 7?", answer: "12"},
-            {question: "Welches Element hat das chemische Symbol O?", answer: "Sauerstoff"},
-            {question: "Wer schrieb 'Faust'?", answer: "Goethe"},
-            {question: "Wie viele Kontinente gibt es?", answer: "7"},
-            {question: "Was ist die größte Zahl: 52, 105, 87?", answer: "105"},
-            {question: "Welche Farbe ergibt sich aus Blau und Gelb?", answer: "Grün"},
-            {question: "Wie viele Minuten hat eine Stunde?", answer: "60"},
-            {question: "Was ist das Gegenteil von 'kalt'?", answer: "warm"},
-            {question: "Welcher Planet ist der Sonne am nächsten?", answer: "Merkur"}
+            {
+                question: "Wie heißt die Hauptstadt von Deutschland?",
+                choices: ["München", "Berlin", "Hamburg"],
+                answer: 1
+            },
+            {
+                question: "Was ist 5 + 7?",
+                choices: ["10", "12", "13"],
+                answer: 1
+            },
+            {
+                question: "Welches Element hat das chemische Symbol O?",
+                choices: ["Gold", "Sauerstoff", "Wasserstoff"],
+                answer: 1
+            },
+            {
+                question: "Wer schrieb 'Faust'?",
+                choices: ["Schiller", "Goethe", "Lessing"],
+                answer: 1
+            },
+            {
+                question: "Wie viele Kontinente gibt es?",
+                choices: ["5", "6", "7"],
+                answer: 2
+            },
+            {
+                question: "Was ist die größte Zahl: 52, 105, 87?",
+                choices: ["52", "105", "87"],
+                answer: 1
+            },
+            {
+                question: "Welche Farbe ergibt sich aus Blau und Gelb?",
+                choices: ["Grün", "Orange", "Lila"],
+                answer: 0
+            },
+            {
+                question: "Wie viele Minuten hat eine Stunde?",
+                choices: ["60", "100", "120"],
+                answer: 0
+            },
+            {
+                question: "Was ist das Gegenteil von 'kalt'?",
+                choices: ["heiß", "warm", "frostig"],
+                answer: 1
+            },
+            {
+                question: "Welcher Planet ist der Sonne am nächsten?",
+                choices: ["Venus", "Mars", "Merkur"],
+                answer: 2
+            }
         ];
 
         let current = 0;
         let answers = [];
         let score = 0;
 
-        function normalize(str) {
-            return str.trim().toLowerCase();
-        }
-
         function showQuestion() {
             const quiz = document.getElementById("quiz-content");
             if (current < questions.length) {
+                let choicesHtml = "";
+                questions[current].choices.forEach((choice, idx) => {
+                    choicesHtml += `
+                        <input type="radio" name="choice" id="choice${idx}" value="${idx}" style="display:none;">
+                        <label class="choice-label" for="choice${idx}">${choice}</label>
+                    `;
+                });
                 quiz.innerHTML = `
                     <div class="question-count">Frage ${current+1} von ${questions.length}</div>
                     <div class="question">${questions[current].question}</div>
-                    <input type="text" id="answer" autocomplete="off" placeholder="Deine Antwort..." />
+                    <div class="choices">${choicesHtml}</div>
                     <button class="btn" id="next-btn" disabled>Antwort prüfen</button>
                     <div id="feedback" style="height:32px"></div>
                 `;
-                const answerInput = document.getElementById("answer");
+
+                const radios = Array.from(document.querySelectorAll('input[type="radio"][name="choice"]'));
                 const nextBtn = document.getElementById("next-btn");
                 const feedback = document.getElementById("feedback");
                 let checked = false;
 
-                answerInput.addEventListener("input", () => {
-                    nextBtn.disabled = answerInput.value.trim() === "";
+                radios.forEach(radio => {
+                    radio.addEventListener("change", () => {
+                        nextBtn.disabled = !radios.some(r => r.checked);
+                    });
                 });
 
                 nextBtn.addEventListener("click", () => {
                     if (!checked) {
-                        // prüfen
-                        const user = normalize(answerInput.value);
-                        const correct = normalize(questions[current].answer);
-                        answers.push(answerInput.value.trim());
-                        if (user === correct) {
+                        const selectedIdx = radios.findIndex(r => r.checked);
+                        answers.push(selectedIdx);
+                        if (selectedIdx === questions[current].answer) {
                             feedback.textContent = "Richtig!";
                             feedback.className = "feedback right";
                             score++;
@@ -161,7 +214,7 @@
                         }
                         checked = true;
                         nextBtn.textContent = current < questions.length - 1 ? "Weiter" : "Ergebnis";
-                        answerInput.disabled = true;
+                        radios.forEach(r => r.disabled = true);
                         nextBtn.disabled = false;
                     } else {
                         current++;
@@ -183,12 +236,13 @@
                     <b>Deine Antworten:</b>
                     <ol>
                         ${questions.map((q, i) => {
-                            const userAnswer = answers[i] || "<i>keine Antwort</i>";
-                            const correct = normalize(userAnswer) === normalize(q.answer);
+                            const userIndex = answers[i];
+                            const correct = userIndex === q.answer;
+                            const userChoice = userIndex !== undefined ? q.choices[userIndex] : "<i>keine Antwort</i>";
                             return `<li>
                                 <b>Frage ${i+1}:</b> ${q.question}<br>
-                                <b>Deine Antwort:</b> ${userAnswer} <span class="feedback ${correct ? 'right' : 'wrong'}">(${correct ? 'richtig' : 'falsch'})</span>
-                                <br><b>Richtige Antwort:</b> ${q.answer}
+                                <b>Deine Antwort:</b> ${userChoice} <span class="feedback ${correct ? 'right' : 'wrong'}">(${correct ? 'richtig' : 'falsch'})</span>
+                                <br><b>Richtige Antwort:</b> ${q.choices[q.answer]}
                             </li>`;
                         }).join("")}
                     </ol>
