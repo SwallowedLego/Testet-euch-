@@ -1,1 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz – 10 Fragen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --primary: #2C8BF2;
+            --background: #f5f7fa;
+            --card-bg: #fff;
+            --border-radius: 12px;
+            --shadow: 0 8px 32px rgba(44,139,242,0.10);
+        }
+        body {
+            background: var(--background);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .quiz-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            width: 100%;
+            padding: 36px 28px 28px 28px;
+            text-align: center;
+        }
+        h1 {
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-size: 2em;
+            font-weight: 700;
+        }
+        .question-count {
+            color: #555;
+            margin-bottom: 18px;
+            font-size: 1em;
+        }
+        .question {
+            color: #222;
+            font-size: 1.25em;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 1.05em;
+            margin-bottom: 18px;
+            box-sizing: border-box;
+        }
+        .btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            padding: 10px 24px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s;
+            margin-top: 8px;
+        }
+        .btn:disabled {
+            background: #aac9f7;
+            cursor: not-allowed;
+        }
+        .btn:hover:not(:disabled) {
+            background: #1762b8;
+        }
+        .result {
+            color: #1762b8;
+            font-size: 1.28em;
+            margin-top: 22px;
+        }
+        .feedback {
+            font-size: 1.15em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .feedback.right {
+            color: #2bbf2b;
+        }
+        .feedback.wrong {
+            color: #d52c2c;
+        }
+        @media (max-width: 500px) {
+            .quiz-container { padding: 18px 5px; }
+            h1 { font-size: 1.3em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz</h1>
+        <div id="quiz-content">
+            <!-- Quiz wird hier angezeigt -->
+        </div>
+    </div>
+    <script>
+        // Fragen und Antworten: Array von Objekten
+        const questions = [
+            {question: "Wie heißt die Hauptstadt von Deutschland?", answer: "Berlin"},
+            {question: "Was ist 5 + 7?", answer: "12"},
+            {question: "Welches Element hat das chemische Symbol O?", answer: "Sauerstoff"},
+            {question: "Wer schrieb 'Faust'?", answer: "Goethe"},
+            {question: "Wie viele Kontinente gibt es?", answer: "7"},
+            {question: "Was ist die größte Zahl: 52, 105, 87?", answer: "105"},
+            {question: "Welche Farbe ergibt sich aus Blau und Gelb?", answer: "Grün"},
+            {question: "Wie viele Minuten hat eine Stunde?", answer: "60"},
+            {question: "Was ist das Gegenteil von 'kalt'?", answer: "warm"},
+            {question: "Welcher Planet ist der Sonne am nächsten?", answer: "Merkur"}
+        ];
 
+        let current = 0;
+        let answers = [];
+        let score = 0;
+
+        function normalize(str) {
+            return str.trim().toLowerCase();
+        }
+
+        function showQuestion() {
+            const quiz = document.getElementById("quiz-content");
+            if (current < questions.length) {
+                quiz.innerHTML = `
+                    <div class="question-count">Frage ${current+1} von ${questions.length}</div>
+                    <div class="question">${questions[current].question}</div>
+                    <input type="text" id="answer" autocomplete="off" placeholder="Deine Antwort..." />
+                    <button class="btn" id="next-btn" disabled>Antwort prüfen</button>
+                    <div id="feedback" style="height:32px"></div>
+                `;
+                const answerInput = document.getElementById("answer");
+                const nextBtn = document.getElementById("next-btn");
+                const feedback = document.getElementById("feedback");
+                let checked = false;
+
+                answerInput.addEventListener("input", () => {
+                    nextBtn.disabled = answerInput.value.trim() === "";
+                });
+
+                nextBtn.addEventListener("click", () => {
+                    if (!checked) {
+                        // prüfen
+                        const user = normalize(answerInput.value);
+                        const correct = normalize(questions[current].answer);
+                        answers.push(answerInput.value.trim());
+                        if (user === correct) {
+                            feedback.textContent = "Richtig!";
+                            feedback.className = "feedback right";
+                            score++;
+                        } else {
+                            feedback.textContent = "Falsch!";
+                            feedback.className = "feedback wrong";
+                        }
+                        checked = true;
+                        nextBtn.textContent = current < questions.length - 1 ? "Weiter" : "Ergebnis";
+                        answerInput.disabled = true;
+                        nextBtn.disabled = false;
+                    } else {
+                        current++;
+                        showQuestion();
+                    }
+                });
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            const quiz = document.getElementById("quiz-content");
+            quiz.innerHTML = `
+                <div class="result"><b>Fertig!</b><br>
+                    Du hast <b>${score} von ${questions.length}</b> Fragen richtig beantwortet.
+                </div>
+                <div style="margin-top:16px; text-align:left;">
+                    <b>Deine Antworten:</b>
+                    <ol>
+                        ${questions.map((q, i) => {
+                            const userAnswer = answers[i] || "<i>keine Antwort</i>";
+                            const correct = normalize(userAnswer) === normalize(q.answer);
+                            return `<li>
+                                <b>Frage ${i+1}:</b> ${q.question}<br>
+                                <b>Deine Antwort:</b> ${userAnswer} <span class="feedback ${correct ? 'right' : 'wrong'}">(${correct ? 'richtig' : 'falsch'})</span>
+                                <br><b>Richtige Antwort:</b> ${q.answer}
+                            </li>`;
+                        }).join("")}
+                    </ol>
+                </div>
+            `;
+        }
+
+        showQuestion();
+    </script>
+</body>
+</html>
