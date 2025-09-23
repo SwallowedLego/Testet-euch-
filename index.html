@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f3f3f3; }
+    .quiz-container { max-width: 420px; margin: 48px auto; background: #fff; padding: 28px 36px; border-radius: 12px; box-shadow: 0 2px 12px #bbb; }
+    .slide { display: none; }
+    .active-slide { display: block; }
+    .btn { margin: 16px 0; padding: 9px 22px; font-size: 1rem; border-radius: 5px; border: none; background: #0077cc; color: white; cursor: pointer; }
+    .btn:disabled { background: #aaa; }
+    .result { font-size: 1.3em; font-weight: bold; margin-top: 18px; }
+    .question { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="quiz-container" id="quiz">
+    <div id="slides"></div>
+    <button class="btn" id="nextBtn">Nächste Frage</button>
+    <div class="result" id="result"></div>
+  </div>
 
+  <script>
+    // Quiz-Inhalt: Jede Frage hat GENAU 4 Antwortmöglichkeiten!
+    const quizData = [
+      {
+        frage: "Was ist die Hauptstadt von Deutschland?",
+        antworten: ["Berlin", "München", "Frankfurt", "Hamburg"],
+        korrekt: 0
+      },
+      {
+        frage: "Welche Farbe entsteht aus Gelb und Blau?",
+        antworten: ["Grün", "Orange", "Lila", "Rot"],
+        korrekt: 0
+      },
+      {
+        frage: "Wie viele Tage hat eine Woche?",
+        antworten: ["5", "6", "7", "8"],
+        korrekt: 2
+      },
+      {
+        frage: "Wie heißt der größte Planet in unserem Sonnensystem?",
+        antworten: ["Mars", "Venus", "Jupiter", "Saturn"],
+        korrekt: 2
+      }
+    ];
+
+    let aktuellerSlide = 0;
+    let punkte = 0;
+    let userAntworten = [];
+
+    function zeigeSlides() {
+      const slidesDiv = document.getElementById('slides');
+      slidesDiv.innerHTML = '';
+      quizData.forEach((frageObj, idx) => {
+        const slide = document.createElement('div');
+        slide.className = 'slide' + (idx === aktuellerSlide ? ' active-slide' : '');
+        slide.innerHTML = `
+          <div class="question"><b>Frage ${idx+1}:</b> ${frageObj.frage}</div>
+          <div>
+            ${frageObj.antworten.map((antw, i) => `
+              <label>
+                <input type="radio" name="antwort${idx}" value="${i}" ${userAntworten[idx] == i ? 'checked' : ''}>
+                ${antw}
+              </label>
+            `).join('')}
+          </div>
+        `;
+        slidesDiv.appendChild(slide);
+      });
+    }
+
+    function handleAntwort() {
+      const radios = document.getElementsByName('antwort'+aktuellerSlide);
+      let checked = false;
+      radios.forEach((radio, idx) => {
+        if(radio.checked) {
+          userAntworten[aktuellerSlide] = idx;
+          checked = true;
+        }
+      });
+      return checked;
+    }
+
+    document.getElementById('nextBtn').onclick = function() {
+      if(!handleAntwort()) {
+        alert("Bitte eine Antwort auswählen!");
+        return;
+      }
+      if(aktuellerSlide < quizData.length - 1) {
+        aktuellerSlide++;
+        zeigeSlides();
+        if(aktuellerSlide === quizData.length - 1) {
+          this.textContent = "Quiz beenden";
+        }
+      } else {
+        // Quiz beenden und Punkte anzeigen
+        punkte = 0;
+        quizData.forEach((frage, idx) => {
+          if(userAntworten[idx] == frage.korrekt) punkte++;
+        });
+        document.getElementById('slides').innerHTML = '';
+        this.style.display = 'none';
+        document.getElementById('result').textContent = `Du hast ${punkte} von ${quizData.length} Punkten erreicht!`;
+      }
+    };
+
+    // Initiales Laden
+    zeigeSlides();
+  </script>
+</body>
+</html>
