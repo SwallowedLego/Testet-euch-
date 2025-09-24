@@ -224,8 +224,26 @@
                 <div class="result"><b>Fertig!</b><br>
                     Du hast <b>${score} von ${questions.length}</b> Fragen richtig beantwortet.
                 </div>
+                <button class="btn" id="restart-btn">Nochmal spielen</button>
+                <button class="btn" id="home-btn">Zur Startseite</button>
             `;
+
+            document.getElementById("restart-btn").onclick = restartQuiz;
+            document.getElementById("home-btn").onclick = goHome;
         }
+
+        function restartQuiz() {
+            current = 0;
+            score = 0;
+            showQuestion();
+        }
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+        window.restartQuiz = restartQuiz;
+        window.goHome = goHome;
 
         showQuestion();
     </script>
