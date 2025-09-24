@@ -115,56 +115,16 @@
     </div>
     <script>
         const questions = [
-            {
-                question: "Welches Organ baut den größten Teil des Alkohols ab?",
-                options: ["Lunge", "Leber", "Herz", "Niere"],
-                answer: "Leber"
-            },
-            {
-                question: "Wie nennt man die wirksame Substanz in alkoholischen Getränken?",
-                options: ["Glukose", "Ethanol", "Methan", "Koffein"],
-                answer: "Ethanol"
-            },
-            {
-                question: "Was passiert kurzfristig bei Alkoholkonsum?",
-                options: ["Reaktionsfähigkeit sinkt", "Man wird stärker", "Man wird immun gegen Krankheiten", "Herzschlag hört auf"],
-                answer: "Reaktionsfähigkeit sinkt"
-            },
-            {
-                question: "Wie schnell gelangt Alkohol ins Blut?",
-                options: ["Nach Sekunden", "Nach Minuten", "Nach Stunden", "Gar nicht"],
-                answer: "Nach Minuten"
-            },
-            {
-                question: "Welche langfristige Krankheit kann Alkohol verursachen?",
-                options: ["Leberzirrhose", "Masern", "Grippe", "Allergien"],
-                answer: "Leberzirrhose"
-            },
-            {
-                question: "Wie wirkt Alkohol auf das Nervensystem?",
-                options: ["Er regt es an", "Er dämpft es", "Er heilt es", "Gar nicht"],
-                answer: "Er dämpft es"
-            },
-            {
-                question: "Was passiert nach regelmäßig hohem Alkoholkonsum?",
-                options: ["Suchtgefahr steigt", "Man wird gesünder", "Man wird immun gegen Viren", "Keine Veränderung"],
-                answer: "Suchtgefahr steigt"
-            },
-            {
-                question: "Welche Getränke enthalten Alkohol?",
-                options: ["Bier", "Wein", "Spirituosen", "Alle genannten"],
-                answer: "Alle genannten"
-            },
-            {
-                question: "Wie viel Promille ist in Deutschland beim Autofahren für Fahranfänger erlaubt?",
-                options: ["0,0", "0,3", "0,5", "1,0"],
-                answer: "0,0"
-            },
-            {
-                question: "Welche Altersgrenze gilt in Deutschland für Bier und Wein?",
-                options: ["14 Jahre", "16 Jahre", "18 Jahre", "21 Jahre"],
-                answer: "16 Jahre"
-            }
+            { question: "Welches Organ baut den größten Teil des Alkohols ab?", options: ["Lunge", "Leber", "Herz", "Niere"], answer: "Leber" },
+            { question: "Wie nennt man die wirksame Substanz in alkoholischen Getränken?", options: ["Glukose", "Ethanol", "Methan", "Koffein"], answer: "Ethanol" },
+            { question: "Was passiert kurzfristig bei Alkoholkonsum?", options: ["Reaktionsfähigkeit sinkt", "Man wird stärker", "Man wird immun gegen Krankheiten", "Herzschlag hört auf"], answer: "Reaktionsfähigkeit sinkt" },
+            { question: "Wie schnell gelangt Alkohol ins Blut?", options: ["Nach Sekunden", "Nach Minuten", "Nach Stunden", "Gar nicht"], answer: "Nach Minuten" },
+            { question: "Welche langfristige Krankheit kann Alkohol verursachen?", options: ["Leberzirrhose", "Masern", "Grippe", "Allergien"], answer: "Leberzirrhose" },
+            { question: "Wie wirkt Alkohol auf das Nervensystem?", options: ["Er regt es an", "Er dämpft es", "Er heilt es", "Gar nicht"], answer: "Er dämpft es" },
+            { question: "Was passiert nach regelmäßig hohem Alkoholkonsum?", options: ["Suchtgefahr steigt", "Man wird gesünder", "Man wird immun gegen Viren", "Keine Veränderung"], answer: "Suchtgefahr steigt" },
+            { question: "Welche Getränke enthalten Alkohol?", options: ["Bier", "Wein", "Spirituosen", "Alle genannten"], answer: "Alle genannten" },
+            { question: "Wie viel Promille ist in Deutschland beim Autofahren für Fahranfänger erlaubt?", options: ["0,0", "0,3", "0,5", "1,0"], answer: "0,0" },
+            { question: "Welche Altersgrenze gilt in Deutschland für Bier und Wein?", options: ["14 Jahre", "16 Jahre", "18 Jahre", "21 Jahre"], answer: "16 Jahre" }
         ];
 
         let current = 0;
@@ -178,9 +138,7 @@
                     <div class="question-count">Frage ${current+1} von ${questions.length}</div>
                     <div class="question">${q.question}</div>
                     <div class="options">
-                        ${q.options.map(opt => `
-                            <button class="option-btn">${opt}</button>
-                        `).join("")}
+                        ${q.options.map(opt => `<button class="option-btn">${opt}</button>`).join("")}
                     </div>
                     <button class="btn" id="next-btn" disabled>Weiter</button>
                 `;
@@ -200,9 +158,7 @@
                         } else {
                             btn.classList.add("wrong");
                             optionButtons.forEach(b => {
-                                if (b.textContent === q.answer) {
-                                    b.classList.add("correct");
-                                }
+                                if (b.textContent === q.answer) b.classList.add("correct");
                             });
                         }
                         nextBtn.disabled = false;
@@ -224,7 +180,19 @@
                 <div class="result"><b>Fertig!</b><br>
                     Du hast <b>${score} von ${questions.length}</b> Fragen richtig beantwortet.
                 </div>
+                <button class="btn" onclick="restartQuiz()">Nochmal spielen</button>
+                <button class="btn" onclick="goHome()">Zur Startseite</button>
             `;
+        }
+
+        function restartQuiz() {
+            current = 0;
+            score = 0;
+            showQuestion();
+        }
+
+        function goHome() {
+            window.location.href = "index.html";
         }
 
         showQuestion();
