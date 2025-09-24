@@ -164,7 +164,7 @@
   <div id="secret-popup">
     <input type="password" id="secret-code" placeholder="Code eingeben">
     <button onclick="checkCode()">OK</button>
-    <div id="secret-message">Paul stinkt nach Käse</div>
+    <div id="secret-message"></div>
   </div>
 
   <script>
@@ -181,7 +181,11 @@
       });
     });
 
-    // Geheimknopf Logik
+    // Verschlüsselte Werte
+    const encryptedCode = "MTIzNDU2Ng=="; 
+    const encryptedMessage = "UGF1bCBoYXQgZWluZW4ga2VpbmVu"; 
+    function decodeBase64(str){ return atob(str); }
+
     const btn = document.getElementById("secret-btn");
     const popup = document.getElementById("secret-popup");
     const message = document.getElementById("secret-message");
@@ -194,7 +198,8 @@
 
     function checkCode() {
       const code = document.getElementById("secret-code").value;
-      if (code === "1254") {
+      if(code === decodeBase64(encryptedCode)){
+        message.textContent = decodeBase64(encryptedMessage);
         message.style.display = "block";
       } else {
         message.style.display = "none";
