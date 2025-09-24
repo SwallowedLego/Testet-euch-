@@ -47,6 +47,46 @@
       .hero{flex-direction:column}
       .hero-card{width:100%}
     }
+
+    /* Geheimknopf + Popup */
+    #secret-btn {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      background: var(--accent-2);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+      transition: transform 0.2s;
+    }
+    #secret-btn:hover { transform: scale(1.1); }
+
+    #secret-popup {
+      position: fixed;
+      bottom: -120px; /* versteckt */
+      left: 15px;
+      background: #fff;
+      border: 2px solid var(--accent-2);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+      transition: bottom 0.3s ease-in-out;
+      z-index: 1000;
+    }
+    #secret-popup.show { bottom: 60px; }
+    #secret-message {
+      margin-top: 8px;
+      color: var(--accent-2);
+      font-weight: bold;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -67,7 +107,6 @@
 
           <nav class="buttons" aria-label="Haupt-Quiz Navigation">
             <a class="btn btn-primary" href="quiz1.html" role="button" aria-pressed="false">
-              <!-- glass icon -->
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M3 3h18v2l-3 10a4 4 0 0 1-4 3H10a4 4 0 0 1-4-3L3 5V3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
@@ -120,11 +159,19 @@
     </main>
   </div>
 
+  <!-- Geheimknopf + Popup -->
+  <button id="secret-btn">★</button>
+  <div id="secret-popup">
+    <input type="password" id="secret-code" placeholder="Code eingeben">
+    <button onclick="checkCode()">OK</button>
+    <div id="secret-message">Paul stinkt nach Käse</div>
+  </div>
+
   <script>
     // set current year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // keyboard accessibility: allow Enter/Space on anchor-role=button
+    // keyboard accessibility
     document.querySelectorAll('a[role="button"]').forEach(el=>{
       el.addEventListener('keydown', e=>{
         if(e.key === 'Enter' || e.key === ' '){
@@ -133,6 +180,27 @@
         }
       });
     });
+
+    // Geheimknopf Logik
+    const btn = document.getElementById("secret-btn");
+    const popup = document.getElementById("secret-popup");
+    const message = document.getElementById("secret-message");
+
+    btn.addEventListener("click", () => {
+      popup.classList.toggle("show");
+      message.style.display = "none";
+      document.getElementById("secret-code").value = "";
+    });
+
+    function checkCode() {
+      const code = document.getElementById("secret-code").value;
+      if (code === "1254") {
+        message.style.display = "block";
+      } else {
+        message.style.display = "none";
+        alert("Falscher Code!");
+      }
+    }
   </script>
 </body>
 </html>
