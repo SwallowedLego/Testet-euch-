@@ -165,10 +165,10 @@
                     });
                 });
 
-                nextBtn.addEventListener("click", () => {
+                nextBtn.onclick = () => {
                     current++;
                     showQuestion();
-                });
+                };
             } else {
                 showResult();
             }
@@ -180,9 +180,12 @@
                 <div class="result"><b>Fertig!</b><br>
                     Du hast <b>${score} von ${questions.length}</b> Fragen richtig beantwortet.
                 </div>
-                <button class="btn" onclick="restartQuiz()">Nochmal spielen</button>
-                <button class="btn" onclick="goHome()">Zur Startseite</button>
+                <button class="btn" id="restart-btn">Nochmal spielen</button>
+                <button class="btn" id="home-btn">Zur Startseite</button>
             `;
+
+            document.getElementById("restart-btn").onclick = restartQuiz;
+            document.getElementById("home-btn").onclick = goHome;
         }
 
         function restartQuiz() {
@@ -194,6 +197,10 @@
         function goHome() {
             window.location.href = "index.html";
         }
+
+        // Damit die Funktionen auch in allen Browsern verfügbar sind:
+        window.restartQuiz = restartQuiz;
+        window.goHome = goHome;
 
         showQuestion();
     </script>
