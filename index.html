@@ -70,7 +70,7 @@
 
     #secret-popup {
       position: fixed;
-      bottom: -120px; /* versteckt */
+      bottom: -160px; /* versteckt */
       left: 15px;
       background: #fff;
       border: 2px solid var(--accent-2);
@@ -79,14 +79,25 @@
       box-shadow: 0 6px 16px rgba(0,0,0,0.2);
       transition: bottom 0.3s ease-in-out;
       z-index: 1000;
+      width: 280px;
     }
-    #secret-popup.show { bottom: 60px; }
-    #secret-message {
-      margin-top: 8px;
-      color: var(--accent-2);
-      font-weight: bold;
+    #secret-popup.show { bottom: 70px; }
+    #secret-popup input { width: 140px; padding:6px; margin-right:6px; border-radius:6px; border:1px solid #ddd; }
+    #secret-popup button { padding:6px 8px; border-radius:6px; border:0; background:var(--accent); color:#fff; cursor:pointer; }
+    /* iframe container */
+    #player-container {
+      position: fixed;
+      bottom: 80px;
+      left: 15px;
+      width: 320px;
+      height: 180px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
       display: none;
+      z-index: 1000;
     }
+    #player-container iframe { width:100%; height:100%; border:0; }
   </style>
 </head>
 <body>
@@ -160,12 +171,15 @@
   </div>
 
   <!-- Geheimknopf + Popup -->
-  <button id="secret-btn">★</button>
-  <div id="secret-popup">
-    <input type="password" id="secret-code" placeholder="Code eingeben">
-    <button onclick="checkCode()">OK</button>
-    <div id="secret-message"></div>
+  <button id="secret-btn" aria-label="Secret">★</button>
+
+  <div id="secret-popup" aria-hidden="true">
+    <input type="password" id="secret-code" placeholder="Code eingeben" aria-label="Geheimcode">
+    <button id="secret-ok">OK</button>
   </div>
+
+  <!-- Player container (wird sichtbar, wenn Code stimmt) -->
+  <div id="player-container" aria-hidden="true"></div>
 
   <script>
     // set current year
@@ -181,31 +195,76 @@
       });
     });
 
-    // Verschlüsselte Werte
-    const encryptedCode = "MTIzNDU2Ng=="; 
-    const encryptedMessage = "V2VyIGRhcyBsaWVzdCBpc3QgdmVyZGFtbXQgRHVtbQo="; 
-    function decodeBase64(str){ return atob(str); }
+    // -------- custom obfuscation (nicht Base64) ----------
+    // Vorgehen (für die verschlüsselte Zeichenkette):
+    // 1) für jedes Zeichen: charCode + 7 -> hex (ohne 0x)
+    // 2) join mit '.'
+    // 3) das resultierende string reverse (umdrehen)
+    // (das ist die gespeicherte verschlüsselte Form)
+    //
+    // Für "1234566" ergibt das z.B. (als gespeicherte, reversed-hex-string):
+    const encryptedCode = "b3.a3.93.83
+";
+
+    // Funktion zum Decodieren der obfuskierten Form zurück zur Original-String
+    function decodeObf(str) {
+      // reverse wieder zurück
+      const unreversed = str.split('').reverse().join('');
+      // split hex parts
+      const parts = unreversed.split('.');
+      const chars = parts.map(p => {
+        const val = parseInt(p, 16);
+        return String.fromCharCode(val - 7);
+      });
+      return chars.join('');
+    }
+
+    // Player URL (YouTube embed for Rickroll)
+    const rickUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0&modestbranding=1";
+    // ------------------------------------------------------
 
     const btn = document.getElementById("secret-btn");
     const popup = document.getElementById("secret-popup");
-    const message = document.getElementById("secret-message");
+    const ok = document.getElementById("secret-ok");
+    const codeInput = document.getElementById("secret-code");
+    const playerContainer = document.getElementById("player-container");
 
+    // toggle popup
     btn.addEventListener("click", () => {
       popup.classList.toggle("show");
-      message.style.display = "none";
-      document.getElementById("secret-code").value = "";
+      popup.setAttribute('aria-hidden', popup.classList.contains('show') ? 'false' : 'true');
+      // reset input
+      codeInput.value = "";
+      // hide player if open
+      playerContainer.style.display = "none";
+      playerContainer.setAttribute('aria-hidden','true');
+      playerContainer.innerHTML = "";
     });
 
-    function checkCode() {
-      const code = document.getElementById("secret-code").value;
-      if(code === Paulistdercoolste
-        message.textContent = der code ist war
-        message.style.display = "block";
+    // check on OK click
+    ok.addEventListener("click", () => {
+      const user = codeInput.value || "";
+      const actual = decodeObf(encryptedCode);
+      if (user === actual) {
+        // show embedded player (Rickroll)
+        playerContainer.innerHTML = '<iframe src="' + rickUrl + '" title="Player" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+        playerContainer.style.display = "block";
+        playerContainer.setAttribute('aria-hidden','false');
+        // close popup
+        popup.classList.remove("show");
+        popup.setAttribute('aria-hidden','true');
+        // clear input
+        codeInput.value = "";
       } else {
-        message.style.display = "none";
+        // falscher code
         alert("Falscher Code!");
       }
-    }
+    });
+
+    // allow pressing Enter in input to submit
+    codeInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") ok.click();
+    });
   </script>
 </body>
 </html>
