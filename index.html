@@ -18,37 +18,28 @@
     *{box-sizing:border-box}
     body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg1),#eef2ff 60%);color:#0f172a}
     .container{max-width:1100px;margin:48px auto;padding:24px}
-
     header{display:flex;align-items:center;gap:16px}
     .logo{width:68px;height:68px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;font-weight:700;font-size:26px}
     h1{margin:0;font-size:28px}
     p.lead{margin:6px 0 0;color:var(--muted)}
-
     main{margin-top:28px}
     .hero{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
     .hero-text{flex:1;min-width:260px}
     .hero-card{flex:0 0 360px;background:linear-gradient(180deg,rgba(255,255,255,0.9),var(--card));border-radius:14px;padding:18px;box-shadow:0 8px 28px rgba(17,24,39,0.06)}
-
     .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
     .feature{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.04)}
     .feature h3{margin:0 0 6px;font-size:16px}
     .feature p{margin:0;color:var(--muted);font-size:14px}
-
     .buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
     .btn{appearance:none;border:0;padding:12px 18px;border-radius:10px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
     .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;box-shadow:0 8px 20px rgba(99,102,241,0.18)}
-    .btn-ghost{background:transparent;border:1px solid rgba(15,23,42,0.06);color:var(--accent);}
-
+    .btn-ghost{background:transparent;border:1px solid rgba(15,23,42,0.06);color:var(--accent)}
     footer{margin-top:38px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center}
-
-    /* Responsive */
     @media (max-width:720px){
       header{gap:12px}
       .hero{flex-direction:column}
       .hero-card{width:100%}
     }
-
-    /* Geheimknopf + Popup */
     #secret-btn {
       position: fixed;
       bottom: 15px;
@@ -67,10 +58,9 @@
       transition: transform 0.2s;
     }
     #secret-btn:hover { transform: scale(1.1); }
-
     #secret-popup {
       position: fixed;
-      bottom: -160px; /* versteckt */
+      bottom: -160px;
       left: 15px;
       background: #fff;
       border: 2px solid var(--accent-2);
@@ -84,7 +74,6 @@
     #secret-popup.show { bottom: 70px; }
     #secret-popup input { width: 140px; padding:6px; margin-right:6px; border-radius:6px; border:1px solid #ddd; }
     #secret-popup button { padding:6px 8px; border-radius:6px; border:0; background:var(--accent); color:#fff; cursor:pointer; }
-    /* iframe container */
     #player-container {
       position: fixed;
       bottom: 80px;
@@ -109,13 +98,11 @@
         <p class="lead">Informationen, Tests und kleine Quizze, die helfen, Wissen rund um Sucht und Prävention zu stärken.</p>
       </div>
     </header>
-
     <main>
       <section class="hero" aria-labelledby="intro-title">
         <div class="hero-text">
           <h2 id="intro-title">Lerne und prüfe dein Wissen</h2>
           <p class="lead">Wähle eines der drei kurzen Quizze zu den Themen Alkohol, Nikotin oder Cannabis. Jedes Quiz besteht aus 10 fragen.</p>
-
           <nav class="buttons" aria-label="Haupt-Quiz Navigation">
             <a class="btn btn-primary" href="quiz1.html" role="button" aria-pressed="false">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -123,14 +110,12 @@
               </svg>
               Quiz: Alkohol
             </a>
-
             <a class="btn btn-primary" href="quiz2.html" role="button" aria-pressed="false">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M5 3h14v4H5zM7 7v10a5 5 0 0 0 10 0V7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
               Quiz: Nikotin
             </a>
-
             <a class="btn btn-primary" href="quiz3.html" role="button" aria-pressed="false">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M12 2v20M6 6l12 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -138,14 +123,11 @@
               Quiz: Cannabis
             </a>
           </nav>
-
           <div style="margin-top:12px;color:var(--muted);font-size:13px">Dauer: ca. 3–5 Minuten pro Quiz</div>
         </div>
-
         <aside class="hero-card" aria-label="Kurzinfo">
           <h3 style="margin-top:0">Warum Prävention?</h3>
           <p style="color:var(--muted);margin-bottom:12px">Prävention schützt davor, Krankheiten, Abhängigkeit und Schäden gar nicht erst entstehen zu lassen.</p>
-
           <div class="features">
             <div class="feature">
               <h3>Alkohol</h3>
@@ -162,7 +144,6 @@
           </div>
         </aside>
       </section>
-
       <footer>
         <div>Erstellt für Suchtprävention &amp; Aufklärung</div>
         <div>&copy; <span id="year"></span> — Informiert &amp; Sicher</div>
@@ -170,7 +151,6 @@
     </main>
   </div>
 
-  <!-- Geheimknopf + Popup -->
   <button id="secret-btn" aria-label="Secret">★</button>
 
   <div id="secret-popup" aria-hidden="true">
@@ -178,14 +158,10 @@
     <button id="secret-ok">OK</button>
   </div>
 
-  <!-- Player container (wird sichtbar, wenn Code stimmt) -->
   <div id="player-container" aria-hidden="true"></div>
 
   <script>
-    // set current year
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // keyboard accessibility
     document.querySelectorAll('a[role="button"]').forEach(el=>{
       el.addEventListener('keydown', e=>{
         if(e.key === 'Enter' || e.key === ' '){
@@ -195,75 +171,50 @@
       });
     });
 
-    // -------- custom obfuscation (nicht Base64) ----------
-    // Vorgehen (für die verschlüsselte Zeichenkette):
-    // 1) für jedes Zeichen: charCode + 7 -> hex (ohne 0x)
-    // 2) join mit '.'
-    // 3) das resultierende string reverse (umdrehen)
-    // (das ist die gespeicherte verschlüsselte Form)
-    //
-    // Für "1234566" ergibt das z.B. (als gespeicherte, reversed-hex-string):
-    const encryptedCode = "b3.a3.93.83
-";
-
-    // Funktion zum Decodieren der obfuskierten Form zurück zur Original-String
-    function decodeObf(str) {
-      // reverse wieder zurück
+    const encryptedCode = "b3.a3.93.83";
+    function decodeObf(str){
       const unreversed = str.split('').reverse().join('');
-      // split hex parts
       const parts = unreversed.split('.');
-      const chars = parts.map(p => {
-        const val = parseInt(p, 16);
+      const chars = parts.map(p=>{
+        const val = parseInt(p,16);
         return String.fromCharCode(val - 7);
       });
       return chars.join('');
     }
 
-    // Player URL (YouTube embed for Rickroll)
     const rickUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0&modestbranding=1";
-    // ------------------------------------------------------
-
     const btn = document.getElementById("secret-btn");
     const popup = document.getElementById("secret-popup");
     const ok = document.getElementById("secret-ok");
     const codeInput = document.getElementById("secret-code");
     const playerContainer = document.getElementById("player-container");
 
-    // toggle popup
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", ()=>{
       popup.classList.toggle("show");
       popup.setAttribute('aria-hidden', popup.classList.contains('show') ? 'false' : 'true');
-      // reset input
       codeInput.value = "";
-      // hide player if open
       playerContainer.style.display = "none";
       playerContainer.setAttribute('aria-hidden','true');
       playerContainer.innerHTML = "";
     });
 
-    // check on OK click
-    ok.addEventListener("click", () => {
+    ok.addEventListener("click", ()=>{
       const user = codeInput.value || "";
       const actual = decodeObf(encryptedCode);
-      if (user === actual) {
-        // show embedded player (Rickroll)
+      if(user === actual){
         playerContainer.innerHTML = '<iframe src="' + rickUrl + '" title="Player" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
         playerContainer.style.display = "block";
         playerContainer.setAttribute('aria-hidden','false');
-        // close popup
         popup.classList.remove("show");
         popup.setAttribute('aria-hidden','true');
-        // clear input
         codeInput.value = "";
       } else {
-        // falscher code
         alert("Falscher Code!");
       }
     });
 
-    // allow pressing Enter in input to submit
-    codeInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") ok.click();
+    codeInput.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter") ok.click();
     });
   </script>
 </body>
