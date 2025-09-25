@@ -1,230 +1,133 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Suchtprävention — Startseite</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg1: #f7f9fc;
-      --accent: #2b6cb0;
-      --accent-2: #7f5af0;
-      --card: #ffffff;
-      --muted: #6b7280;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg1),#eef2ff 60%);color:#0f172a}
-    .container{max-width:1100px;margin:48px auto;padding:24px}
-    header{display:flex;align-items:center;gap:16px}
-    .logo{width:68px;height:68px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;font-weight:700;font-size:26px}
-    h1{margin:0;font-size:28px}
-    p.lead{margin:6px 0 0;color:var(--muted)}
-    main{margin-top:28px}
-    .hero{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
-    .hero-text{flex:1;min-width:260px}
-    .hero-card{flex:0 0 360px;background:linear-gradient(180deg,rgba(255,255,255,0.9),var(--card));border-radius:14px;padding:18px;box-shadow:0 8px 28px rgba(17,24,39,0.06)}
-    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
-    .feature{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.04)}
-    .feature h3{margin:0 0 6px;font-size:16px}
-    .feature p{margin:0;color:var(--muted);font-size:14px}
-    .buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
-    .btn{appearance:none;border:0;padding:12px 18px;border-radius:10px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;box-shadow:0 8px 20px rgba(99,102,241,0.18)}
-    .btn-ghost{background:transparent;border:1px solid rgba(15,23,42,0.06);color:var(--accent)}
-    footer{margin-top:38px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center}
-    @media (max-width:720px){
-      header{gap:12px}
-      .hero{flex-direction:column}
-      .hero-card{width:100%}
-    }
-    #secret-btn {
-      position: fixed;
-      bottom: 15px;
-      left: 15px;
-      background: var(--accent-2);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      cursor: pointer;
-      font-size: 18px;
-      line-height: 1;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 1000;
-      transition: transform 0.2s;
-    }
-    #secret-btn:hover { transform: scale(1.1); }
-    #secret-popup {
-      position: fixed;
-      bottom: -160px;
-      left: 15px;
-      background: #fff;
-      border: 2px solid var(--accent-2);
-      border-radius: 10px;
-      padding: 10px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-      transition: bottom 0.3s ease-in-out;
-      z-index: 1000;
-      width: 280px;
-    }
-    #secret-popup.show { bottom: 70px; }
-    #secret-popup input { width: 140px; padding:6px; margin-right:6px; border-radius:6px; border:1px solid #ddd; }
-    #secret-popup button { padding:6px 8px; border-radius:6px; border:0; background:var(--accent); color:#fff; cursor:pointer; }
-    #player-container {
-      position: fixed;
-      bottom: 80px;
-      left: 15px;
-      width: 320px;
-      height: 180px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      display: none;
-      z-index: 1000;
-    }
-    #player-container iframe { width:100%; height:100%; border:0; }
-    #corner-gif {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      width: 120px;
-      height: auto;
-      border-radius: 8px;
-      z-index: 1000;
-      pointer-events: none;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Suchtprävention — Startseite</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1: #f7f9fc;
+  --accent: #2b6cb0;
+  --accent-2: #7f5af0;
+  --card: #ffffff;
+  --muted: #6b7280;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg1),#eef2ff 60%);color:#0f172a}
+.container{max-width:1100px;margin:48px auto;padding:24px}
+header{display:flex;align-items:center;gap:16px}
+.logo{width:68px;height:68px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;font-weight:700;font-size:26px}
+h1{margin:0;font-size:28px}
+p.lead{margin:6px 0 0;color:var(--muted)}
+main{margin-top:28px}
+.hero{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.hero-text{flex:1;min-width:260px}
+.hero-card{flex:0 0 360px;background:linear-gradient(180deg,rgba(255,255,255,0.9),var(--card));border-radius:14px;padding:18px;box-shadow:0 8px 28px rgba(17,24,39,0.06)}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
+.feature{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.04)}
+.feature h3{margin:0 0 6px;font-size:16px}
+.feature p{margin:0;color:var(--muted);font-size:14px}
+.buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.btn{appearance:none;border:0;padding:12px 18px;border-radius:10px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+.btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;box-shadow:0 8px 20px rgba(99,102,241,0.18)}
+.btn-ghost{background:transparent;border:1px solid rgba(15,23,42,0.06);color:var(--accent)}
+footer{margin-top:38px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center}
+@media (max-width:720px){
+  header{gap:12px}
+  .hero{flex-direction:column}
+  .hero-card{width:100%}
+}
+#secret-btn {position: fixed; bottom: 15px; left: 15px; background: var(--accent-2); color: white; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 18px; line-height: 1; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1000; transition: transform 0.2s;}
+#secret-btn:hover { transform: scale(1.1); }
+#secret-popup {position: fixed; bottom: -160px; left: 15px; background: #fff; border: 2px solid var(--accent-2); border-radius: 10px; padding: 10px; box-shadow: 0 6px 16px rgba(0,0,0,0.2); transition: bottom 0.3s ease-in-out; z-index: 1000; width: 280px;}
+#secret-popup.show { bottom: 70px; }
+#secret-popup input { width: 140px; padding:6px; margin-right:6px; border-radius:6px; border:1px solid #ddd; }
+#secret-popup button { padding:6px 8px; border-radius:6px; border:0; background:var(--accent); color:#fff; cursor:pointer; }
+#player-container {position: fixed; bottom: 80px; left: 15px; width: 320px; height: 180px; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.2); display: none; z-index: 1000;}
+#player-container iframe { width:100%; height:100%; border:0; }
+#player-gif {position: absolute; top: -120px; right: 0; width: 120px; height: auto; display: none; z-index: 1001;}
+</style>
 </head>
 <body>
-  <img src="Great_Black_Cockatoo.gif" id="corner-gif" aria-hidden="true">
-  <div class="container" role="main">
-    <header>
-      <div class="logo" aria-hidden="true">SP</div>
-      <div>
-        <h1>Suchtprävention — Alkohol · Nikotin · Cannabis</h1>
-        <p class="lead">Informationen, Tests und kleine Quizze, die helfen, Wissen rund um Sucht und Prävention zu stärken.</p>
+<div class="container" role="main">
+  <header>
+    <div class="logo" aria-hidden="true">SP</div>
+    <div>
+      <h1>Suchtprävention — Alkohol · Nikotin · Cannabis</h1>
+      <p class="lead">Informationen, Tests und kleine Quizze, die helfen, Wissen rund um Sucht und Prävention zu stärken.</p>
+    </div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="intro-title">
+      <div class="hero-text">
+        <h2 id="intro-title">Lerne und prüfe dein Wissen</h2>
+        <p class="lead">Wähle eines der drei kurzen Quizze zu den Themen Alkohol, Nikotin oder Cannabis. Jedes Quiz besteht aus 10 fragen.</p>
+        <nav class="buttons" aria-label="Haupt-Quiz Navigation">
+          <a class="btn btn-primary" href="quiz1.html" role="button" aria-pressed="false">Quiz: Alkohol</a>
+          <a class="btn btn-primary" href="quiz2.html" role="button" aria-pressed="false">Quiz: Nikotin</a>
+          <a class="btn btn-primary" href="quiz3.html" role="button" aria-pressed="false">Quiz: Cannabis</a>
+        </nav>
+        <div style="margin-top:12px;color:var(--muted);font-size:13px">Dauer: ca. 3–5 Minuten pro Quiz</div>
       </div>
-    </header>
-    <main>
-      <section class="hero" aria-labelledby="intro-title">
-        <div class="hero-text">
-          <h2 id="intro-title">Lerne und prüfe dein Wissen</h2>
-          <p class="lead">Wähle eines der drei kurzen Quizze zu den Themen Alkohol, Nikotin oder Cannabis. Jedes Quiz besteht aus 10 fragen.</p>
-          <nav class="buttons" aria-label="Haupt-Quiz Navigation">
-            <a class="btn btn-primary" href="quiz1.html" role="button" aria-pressed="false">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M3 3h18v2l-3 10a4 4 0 0 1-4 3H10a4 4 0 0 1-4-3L3 5V3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-              Quiz: Alkohol
-            </a>
-            <a class="btn btn-primary" href="quiz2.html" role="button" aria-pressed="false">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 3h14v4H5zM7 7v10a5 5 0 0 0 10 0V7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-              Quiz: Nikotin
-            </a>
-            <a class="btn btn-primary" href="quiz3.html" role="button" aria-pressed="false">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 2v20M6 6l12 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-              Quiz: Cannabis
-            </a>
-          </nav>
-          <div style="margin-top:12px;color:var(--muted);font-size:13px">Dauer: ca. 3–5 Minuten pro Quiz</div>
-        </div>
-        <aside class="hero-card" aria-label="Kurzinfo">
-          <h3 style="margin-top:0">Warum Prävention?</h3>
-          <p style="color:var(--muted);margin-bottom:12px">Prävention schützt davor, Krankheiten, Abhängigkeit und Schäden gar nicht erst entstehen zu lassen.</p>
-          <div class="features">
-            <div class="feature">
-              <h3>Alkohol</h3>
-              <p>Rauschmittel in Getränken, macht betrunken und kann abhängig machen.</p>
-            </div>
-            <div class="feature">
-              <h3>Nikotin</h3>
-              <p>Wirkstoff in Tabak, macht schnell süchtig.</p>
-            </div>
-            <div class="feature">
-              <h3>Cannabis</h3>
-              <p>Pflanze mit THC, wirkt berauschend.</p>
-            </div>
-          </div>
-        </aside>
-      </section>
-      <footer>
-        <div>Erstellt für Suchtprävention &amp; Aufklärung</div>
-        <div>&copy; <span id="year"></span> — Informiert &amp; Sicher</div>
-      </footer>
-    </main>
-  </div>
+    </section>
+  </main>
+</div>
 
-  <button id="secret-btn" aria-label="Secret">★</button>
-  <div id="secret-popup" aria-hidden="true">
-    <input type="password" id="secret-code" placeholder="Code eingeben" aria-label="Geheimcode">
-    <button id="secret-ok">OK</button>
-  </div>
-  <div id="player-container" aria-hidden="true"></div>
+<button id="secret-btn">★</button>
+<div id="secret-popup">
+  <input type="password" id="secret-code" placeholder="Code eingeben">
+  <button id="secret-ok">OK</button>
+</div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    document.querySelectorAll('a[role="button"]').forEach(el=>{
-      el.addEventListener('keydown', e=>{
-        if(e.key === 'Enter' || e.key === ' '){
-          e.preventDefault();
-          el.click();
-        }
-      });
-    });
+<div id="player-container">
+  <img id="player-gif" src="Great_Black_Cockatoo.gif" alt="">
+</div>
 
-    const encryptedCode = "b3.a3.93.83";
-    function decodeObf(str){
-      const unreversed = str.split('').reverse().join('');
-      const parts = unreversed.split('.');
-      const chars = parts.map(p=>{
-        const val = parseInt(p,16);
-        return String.fromCharCode(val - 7);
-      });
-      return chars.join('');
-    }
+<script>
+document.getElementById('year')?.textContent = new Date().getFullYear();
 
-    const rickUrl = "https://www.youtube.com/embed/xvFZjo5PgG0?autoplay=1&rel=0&modestbranding=1";
-    const btn = document.getElementById("secret-btn");
-    const popup = document.getElementById("secret-popup");
-    const ok = document.getElementById("secret-ok");
-    const codeInput = document.getElementById("secret-code");
-    const playerContainer = document.getElementById("player-container");
+const encryptedCode = "b3.a3.93.83";
+function decodeObf(str){
+  const unreversed = str.split('').reverse().join('');
+  const parts = unreversed.split('.');
+  return parts.map(p=>String.fromCharCode(parseInt(p,16)-7)).join('');
+}
 
-    btn.addEventListener("click", ()=>{
-      popup.classList.toggle("show");
-      popup.setAttribute('aria-hidden', popup.classList.contains('show') ? 'false' : 'true');
-      codeInput.value = "";
-      playerContainer.style.display = "none";
-      playerContainer.setAttribute('aria-hidden','true');
-      playerContainer.innerHTML = "";
-    });
+const rickUrl = "https://www.youtube.com/embed/xvFZjo5PgG0?autoplay=1&rel=0&modestbranding=1";
+const btn = document.getElementById("secret-btn");
+const popup = document.getElementById("secret-popup");
+const ok = document.getElementById("secret-ok");
+const codeInput = document.getElementById("secret-code");
+const playerContainer = document.getElementById("player-container");
+const playerGif = document.getElementById("player-gif");
 
-    ok.addEventListener("click", ()=>{
-      const user = codeInput.value || "";
-      const actual = decodeObf(encryptedCode);
-      if(user === actual){
-        playerContainer.innerHTML = '<iframe src="' + rickUrl + '" title="Player" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
-        playerContainer.style.display = "block";
-        playerContainer.setAttribute('aria-hidden','false');
-        popup.classList.remove("show");
-        popup.setAttribute('aria-hidden','true');
-        codeInput.value = "";
-      } else {
-        alert("Falscher Code!");
-      }
-    });
+btn.addEventListener("click", ()=>{
+  popup.classList.toggle("show");
+  codeInput.value = "";
+  playerContainer.style.display = "none";
+  playerGif.style.display = "none";
+  playerContainer.innerHTML = '';
+});
 
-    codeInput.addEventListener("keydown", (e)=>{
-      if(e.key === "Enter") ok.click();
-    });
-  </script>
+ok.addEventListener("click", ()=>{
+  const user = codeInput.value || "";
+  const actual = decodeObf(encryptedCode);
+  if(user === actual){
+    playerContainer.innerHTML = '<iframe src="'+rickUrl+'" title="Player" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+    playerGif.style.display = "block";
+    playerContainer.style.display = "block";
+    popup.classList.remove("show");
+  } else {
+    alert("Falscher Code! //Notiz(später entfernen) der code ist 1234");
+  }
+});
+
+codeInput.addEventListener("keydown", (e)=>{
+  if(e.key === "Enter") ok.click();
+});
+</script>
 </body>
 </html>
