@@ -87,9 +87,20 @@
       z-index: 1000;
     }
     #player-container iframe { width:100%; height:100%; border:0; }
+    #corner-gif {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      width: 120px;
+      height: auto;
+      border-radius: 8px;
+      z-index: 1000;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
+  <img src="Great_Black_Cockatoo.gif" id="corner-gif" aria-hidden="true">
   <div class="container" role="main">
     <header>
       <div class="logo" aria-hidden="true">SP</div>
@@ -152,12 +163,10 @@
   </div>
 
   <button id="secret-btn" aria-label="Secret">★</button>
-
   <div id="secret-popup" aria-hidden="true">
     <input type="password" id="secret-code" placeholder="Code eingeben" aria-label="Geheimcode">
     <button id="secret-ok">OK</button>
   </div>
-
   <div id="player-container" aria-hidden="true"></div>
 
   <script>
@@ -209,7 +218,7 @@
         popup.setAttribute('aria-hidden','true');
         codeInput.value = "";
       } else {
-        alert("Falscher Code! //Notiz an Paul der Code ist 1234");
+        alert("Falscher Code!");
       }
     });
 
